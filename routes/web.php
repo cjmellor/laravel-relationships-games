@@ -8,5 +8,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('games', GameController::class)->name('games.store')
+Route::resource('games', GameController::class);
 Route::resource('stores', StoreController::class);

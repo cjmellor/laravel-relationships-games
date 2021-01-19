@@ -7,3 +7,5 @@
         <li>{{ $game->name }}</li>
     @endforeach
 </ul>
+
+<a href="{{ route('games.edit', $games) }}">Edit</a>

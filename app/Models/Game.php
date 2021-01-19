@@ -16,4 +16,18 @@ class Game extends Model
     {
         return $this->belongsToMany(Store::class);
     }
+
+    /**
+     * List of consoles available
+     * @TODO Remove this in favor of a relationship model
+     *
+     * @return string[]
+     */
+    public function consoleList(): array
+    {
+        return [
+            'Xbox Series X',
+            'PlayStation 5',
+        ];
+    }
 }

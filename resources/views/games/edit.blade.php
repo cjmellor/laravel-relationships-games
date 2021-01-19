@@ -1,7 +1,13 @@
-<h1>@lang('messages.add_new_game')</h1>
+<h1>Editing "{{ $games->title }}"</h1>
 
-<form action="{{ route('games.store') }}" method="post">
+@if(session()->has('success'))
+    {{ session()->get('success') }}<br><br>
+@endif
+
+<form action="{{ route('games.update', $games) }}" method="post">
     @csrf
+
+    @method('PATCH')
 
     <section>
         <label for="title">Title</label>

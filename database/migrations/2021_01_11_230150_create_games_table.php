@@ -15,8 +15,7 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-//            $table->foreignId('store_id')->constrained('games');
+            $table->string('title');
             $table->string('genre');
             $table->enum('platform', ['Xbox Series X', 'PlayStation 5']);
             $table->timestamps();

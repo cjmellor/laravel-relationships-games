@@ -4,14 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Store;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class GameController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return Application|Factory|View
      */
     public function index()
     {
@@ -25,21 +30,25 @@ class GameController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Store  $stores
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param  Game  $game
+     * @return Application|Factory|View
      */
-    public function create()
+    public function create(Game $game)
     {
-        $stores = Store::all();
+        $stores = Store::get(['id', 'name']);
 
-        return view('games.create')->with('stores', $stores);
+        return view('games.create')->with([
+            'consoles' => $game->consoleList(),
+            'games' => $game,
+            'stores' => $stores,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @param  Request  $request
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -57,7 +66,7 @@ class GameController extends Controller
      * Display the specified resource.
      *
      * @param  Game  $game
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|int
+     * @return Application|Factory|View|int
      */
     public function show(Game $game)
     {
@@ -69,31 +78,46 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
+     * @param  Game  $game
+     * @return Application|Factory|View
      */
     public function edit(Game $game)
     {
-        //
+        $stores = Store::get(['id', 'name']);
+
+        return view('games.edit')->with([
+            'consoles' => $game->consoleList(),
+            'games' => $game,
+            'stores' => $stores,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param  Game  $game
+     * @return RedirectResponse
      */
     public function update(Request $request, Game $game)
     {
-        //
+
+        $game->title = $request->title;
+        $game->genre = $request->genre;
+        $game->platform = $request->platform;
+
+        $game->saveOrFail();
+
+        $game->stores()->sync($request->store_id);
+
+        return redirect()->back()->with('success', 'Game updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Game  $game
-     * @return \Illuminate\Http\Response
+     * @param  Game  $game
+     * @return Response
      */
     public function destroy(Game $game)
     {
