@@ -8,4 +8,5 @@
     @endforeach
 </ul>
 
-<a href="{{ route('games.edit', $games) }}">Edit</a>
+<a href="{{ route('games.edit', $games) }}">Edit</a> |
+<a href="{{ route('games.destroy', $game) }}">Delete</a>

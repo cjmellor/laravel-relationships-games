@@ -1,8 +1,10 @@
+@extends('layouts.main')
+
+@section('title', 'Editing ' . $games->title)
+
 <h1>Editing "{{ $games->title }}"</h1>
 
-@if(session()->has('success'))
-    {{ session()->get('success') }}<br><br>
-@endif
+<x-message type="success" />
 
 <form action="{{ route('games.update', $games) }}" method="post">
     @csrf
@@ -40,6 +42,10 @@
 
     <section>
         <button type="submit">@lang('messages.edit_game')</button>
+    </section>
+
+    <section>
+        <a href="{{ route('games.index') }}">Back to games</a>
     </section>
 </form>
 

@@ -6,7 +6,11 @@
 
 @foreach($games as $game)
     <ul>
-        <li><a href="{{ route('games.show', $game) }}">{{ $game->title }}</a></li>
+        <li>
+            <a href="{{ route('games.show', $game) }}">{{ $game->title }}</a> |
+            <a href="{{ route('games.edit', $game) }}">Edit</a> |
+            <a href="{{ route('games.destroy', $game) }}">Delete</a>
+        </li>
     </ul>
 @endforeach
 
