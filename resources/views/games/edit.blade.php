@@ -1,24 +1,24 @@
 @extends('layouts.main')
 
-@section('title', 'Editing ' . $games->title)
+@section('title', 'Editing ' . $game->title)
 
-<h1>Editing "{{ $games->title }}"</h1>
+<h1>Editing "{{ $game->title }}"</h1>
 
-<x-message type="success" />
+<x-message type="success"/>
 
-<form action="{{ route('games.update', $games) }}" method="post">
+<form action="{{ route('games.update', $game) }}" method="post">
     @csrf
 
     @method('PATCH')
 
     <section>
         <label for="title">Title</label>
-        <input id="title" name="title" type="text" value="{{ $games->title ?? '' }}">
+        <input id="title" name="title" type="text" value="{{ $game->title ?? '' }}">
     </section>
 
     <section>
         <label for="genre">Genre</label>
-        <input id="genre" name="genre" type="text" value="{{ $games->genre ?? '' }}">
+        <input id="genre" name="genre" type="text" value="{{ $game->genre ?? '' }}">
     </section>
 
     <section>
@@ -26,7 +26,7 @@
         <select id="platform" name="platform">
             <option disabled selected value="null">---Choose---</option>
             @foreach($consoles as $console)
-                <option {{ ($games->platform == $console) ? 'selected' : '' }} value="{{ $console }}">{{ $console }}</option>
+                <option {{ ($game->platform == $console) ? 'selected' : '' }} value="{{ $console }}">{{ $console }}</option>
             @endforeach
         </select>
     </section>
@@ -35,17 +35,17 @@
         <label for="store_id">Stores</label>
         <select id="store_id" multiple name="store_id[]">
             @foreach($stores as $store)
-                <option {{ $games->stores->firstWhere('id', $store->id) != null ? 'selected' : '' }} value="{{ $store->id }}">{{ $store->name }}</option>
+                <option {{ $game->stores->firstWhere('id', $store->id) != null ? 'selected' : '' }} value="{{ $store->id }}">{{ $store->name }}</option>
             @endforeach
         </select>
     </section>
 
     <section>
-        <button type="submit">@lang('messages.edit_game')</button>
+        <button type="submit">@lang('messages.edit', ['type' => 'Game'])</button>
     </section>
 
     <section>
-        <a href="{{ route('games.index') }}">Back to games</a>
+        <a href="{{ route('games.show', $game) }}">@lang('messages.back_to', ['type' => 'Game'])</a>
     </section>
 </form>
 

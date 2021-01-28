@@ -1,4 +1,4 @@
-<h1>@lang('messages.add_new_game')</h1>
+<h1>@lang('messages.add_new_store')</h1>
 
 <form action="{{ route('stores.store') }}" method="post">
     @csrf
@@ -13,5 +13,5 @@
         <input id="location" name="location" type="text">
     </section>
 
-    <input type="submit" value="@lang('messages.add_game')">
+    <input type="submit" value="@lang('messages.add_new_store')">
 </form>

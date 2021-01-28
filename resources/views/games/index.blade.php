@@ -7,11 +7,10 @@
 @foreach($games as $game)
     <ul>
         <li>
-            <a href="{{ route('games.show', $game) }}">{{ $game->title }}</a> |
-            <a href="{{ route('games.edit', $game) }}">Edit</a> |
-            <a href="{{ route('games.destroy', $game) }}">Delete</a>
+            <a href="{{ route('games.show', $game) }}">{{ $game->title }}</a>
         </li>
     </ul>
 @endforeach
 
-<a href="{{ route('games.create') }}">@lang('messages.add_new_game')</a>
+<a href="{{ route('games.create') }}">@lang('messages.add_new_game')</a> |
+<a href="{{ route('stores.index') }}">@lang('messages.back_to_store')</a>

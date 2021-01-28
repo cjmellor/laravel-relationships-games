@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Store;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class GameController extends Controller
 {
@@ -59,7 +59,7 @@ class GameController extends Controller
         ])->stores()->sync($request->store_id);
 
         return redirect()->route('games.index')
-            ->with('success', __('messages.success_game_added', ['game' => $request->title]));
+            ->with('success', __('messages.success_added', ['type' => $request->title]));
     }
 
     /**
@@ -87,7 +87,7 @@ class GameController extends Controller
 
         return view('games.edit')->with([
             'consoles' => $game->consoleList(),
-            'games' => $game,
+            'game' => $game,
             'stores' => $stores,
         ]);
     }
@@ -101,26 +101,30 @@ class GameController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-
-        $game->title = $request->title;
-        $game->genre = $request->genre;
-        $game->platform = $request->platform;
-
-        $game->saveOrFail();
+        $game->update([
+            'title' => $request->title,
+            'genre' => $request->genre,
+            'platform' => $request->platform,
+        ]);
 
         $game->stores()->sync($request->store_id);
 
-        return redirect()->back()->with('success', 'Game updated');
+        return redirect()->route('games.show', $game)
+            ->with('success', __('messages.success_updated', ['type' => $game->title]));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  Game  $game
-     * @return Response
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function destroy(Game $game)
     {
-        //
+        $game->delete();
+
+        return redirect()->route('games.index')
+            ->with('success', __('messages.success_deleted', ['type' => $game->title]));
     }
 }

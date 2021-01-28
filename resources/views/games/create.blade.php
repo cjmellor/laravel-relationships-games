@@ -33,7 +33,7 @@
     </section>
 
     <section>
-        <button type="submit">@lang('messages.edit_game')</button>
+        <button type="submit">@lang('messages.add_game', ['type' => 'Game'])</button>
     </section>
 </form>
 
