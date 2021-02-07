@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 class Message extends Component
 {
     /**
-     * Message type
+     * Message type.
      *
      * @var string
      */

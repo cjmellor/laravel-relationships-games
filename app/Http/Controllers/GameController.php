@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use Throwable;
-use App\Models\Game;
-use App\Models\Store;
-use App\Models\Genre;
 use App\Models\Console;
-use Illuminate\Http\Request;
+use App\Models\Game;
+use App\Models\Genre;
+use App\Models\Store;
+use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\Request;
+use Throwable;
 
 class GameController extends Controller
 {

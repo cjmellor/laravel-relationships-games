@@ -45,7 +45,7 @@ class StoreController extends Controller
     {
         Store::create([
             'name' => $request->name,
-            'location' => $request->location
+            'location' => $request->location,
         ]);
 
         return redirect()->route('stores.index')

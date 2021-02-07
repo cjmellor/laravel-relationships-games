@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Game extends Model
@@ -12,7 +12,7 @@ class Game extends Model
     use HasFactory;
 
     /**
-     * Relationship: many-to-many
+     * Relationship: many-to-many.
      *
      * A game belongs to many stores
      *
@@ -24,7 +24,7 @@ class Game extends Model
     }
 
     /**
-     * Relationship: one-to-many
+     * Relationship: one-to-many.
      *
      * A game has one genre
      *
@@ -36,7 +36,7 @@ class Game extends Model
     }
 
     /**
-     * Relationship: many-to-many
+     * Relationship: many-to-many.
      *
      * A game has many consoles
      *
