@@ -17,8 +17,13 @@
     </section>
 
     <section>
-        <label for="genre">Genre</label>
-        <input id="genre" name="genre" type="text" value="{{ $game->genre ?? '' }}">
+        <label for="genre_id">Genre</label>
+        <select name="genre_id" id="genre_id">
+            <option disabled value="null">---Choose---</option>
+            @foreach($genres as $genre)
+                <option {{ $genre->id === $game->genre->id ? 'selected' : ''  }} value="{{ $genre->id }}">{{ $genre->name }}</option>
+            @endforeach
+        </select>
     </section>
 
     <section>

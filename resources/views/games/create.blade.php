@@ -5,20 +5,25 @@
 
     <section>
         <label for="title">Title</label>
-        <input id="title" name="title" type="text" value="{{ $games->title ?? '' }}">
+        <input id="title" name="title" type="text" value="{{ $game->title ?? '' }}">
     </section>
 
     <section>
-        <label for="genre">Genre</label>
-        <input id="genre" name="genre" type="text" value="{{ $games->genre ?? '' }}">
+        <label for="genre_id">Genre</label>
+        <select name="genre_id" id="genre_id">
+            <option disabled selected value="null">---Choose Genre---</option>
+            @foreach($genres as $genre)
+                <option value="{{ $genre->id }}">{{ $genre->name }}</option>
+            @endforeach
+        </select>
     </section>
 
     <section>
         <label for="platform">Platform</label>
         <select id="platform" name="platform">
-            <option disabled selected value="null">---Choose---</option>
+            <option disabled selected value="null">---Choose Platform---</option>
             @foreach($consoles as $console)
-                <option {{ ($games->platform == $console) ? 'selected' : '' }} value="{{ $console }}">{{ $console }}</option>
+                <option value="{{ $console }}">{{ $console }}</option>
             @endforeach
         </select>
     </section>
@@ -27,7 +32,7 @@
         <label for="store_id">Stores</label>
         <select id="store_id" multiple name="store_id[]">
             @foreach($stores as $store)
-                <option {{ $games->stores->firstWhere('id', $store->id) != null ? 'selected' : '' }} value="{{ $store->id }}">{{ $store->name }}</option>
+                <option value="{{ $store->id }}">{{ $store->name }}</option>
             @endforeach
         </select>
     </section>
