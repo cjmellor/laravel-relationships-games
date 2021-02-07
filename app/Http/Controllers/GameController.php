@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Throwable;
 use App\Models\Game;
 use App\Models\Store;
-use Exception;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
+use App\Models\Genre;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\Foundation\Application;
 
 class GameController extends Controller
 {
@@ -20,9 +22,7 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::with('stores')
-            ->orderBy('title')
-            ->get();
+        $games = Game::orderBy('title')->get();
 
         return view('games.index')->with('games', $games);
     }
@@ -30,16 +30,16 @@ class GameController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @param  Game  $game
      * @return Application|Factory|View
      */
-    public function create(Game $game)
+    public function create()
     {
         $stores = Store::get(['id', 'name']);
+        $genres = Genre::get(['id', 'name'])->sortBy('name');
 
         return view('games.create')->with([
-            'consoles' => $game->consoleList(),
-            'games' => $game,
+            'consoles' => (new Game())->consoleList(),
+            'genres' => $genres,
             'stores' => $stores,
         ]);
     }
@@ -49,14 +49,19 @@ class GameController extends Controller
      *
      * @param  Request  $request
      * @return RedirectResponse
+     * @throws Throwable
      */
     public function store(Request $request)
     {
-        Game::create([
-            'title' => $request->title,
-            'genre' => $request->genre,
-            'platform' => $request->platform,
-        ])->stores()->sync($request->store_id);
+        $game = new Game();
+
+        $game->title = $request->title;
+        $game->platform = $request->platform;
+        $game->genre()->associate($request->genre_id);
+
+        $game->saveOrFail();
+
+        $game->stores()->attach($request->store_id);
 
         return redirect()->route('games.index')
             ->with('success', __('messages.success_added', ['type' => $request->title]));
@@ -71,7 +76,7 @@ class GameController extends Controller
     public function show(Game $game)
     {
         return view('games.show')->with([
-            'games' => $game
+            'game' => $game,
         ]);
     }
 
@@ -84,10 +89,12 @@ class GameController extends Controller
     public function edit(Game $game)
     {
         $stores = Store::get(['id', 'name']);
+        $genres = Genre::get(['id', 'name'])->sortBy('name');
 
         return view('games.edit')->with([
             'consoles' => $game->consoleList(),
             'game' => $game,
+            'genres' => $genres,
             'stores' => $stores,
         ]);
     }
@@ -98,14 +105,15 @@ class GameController extends Controller
      * @param  Request  $request
      * @param  Game  $game
      * @return RedirectResponse
+     * @throws Throwable
      */
     public function update(Request $request, Game $game)
     {
-        $game->update([
-            'title' => $request->title,
-            'genre' => $request->genre,
-            'platform' => $request->platform,
-        ]);
+        $game->title = $request->title;
+        $game->platform = $request->platform;
+        $game->genre()->associate($request->genre_id);
+
+        $game->saveOrFail();
 
         $game->stores()->sync($request->store_id);
 
@@ -122,6 +130,8 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
+        $game->stores()->detach();
+
         $game->delete();
 
         return redirect()->route('games.index')

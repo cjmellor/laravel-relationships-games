@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Carbon\Carbon;
+use App\Models\Game;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class GameSeeder extends Seeder
 {
@@ -15,57 +15,55 @@ class GameSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('games')->insert([
+        /** @var array $gameData */
+        $gameData = [
             [
                 'title' => 'Assassin\'s Creed Valhalla',
-                'genre' => 'RPG',
+                'genre_id' => 18,
                 'platform' => 'Xbox Series X',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'title' => 'Cyberpunk 2077',
-                'genre' => 'Action RPG',
+                'genre_id' => 9,
                 'platform' => 'PlayStation 5',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'title' => 'Spider-Man: Miles Moralis',
-                'genre' => 'Open World',
+                'genre_id' => 18,
                 'platform' => 'PlayStation 5',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'title' => 'Forza Horizon 7',
-                'genre' => 'Racing',
+                'genre_id' => 7,
                 'platform' => 'Xbox Series X',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'title' => 'Gears of War',
-                'genre' => 'Action',
+                'genre_id' => 3,
                 'platform' => 'Xbox Series X',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
 
             [
                 'title' => 'God of War',
-                'genre' => 'Action',
+                'genre_id' => 18,
                 'platform' => 'PlayStation 5',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
                 'title' => 'Death Stranding',
-                'genre' => 'Open World',
+                'genre_id' => 18,
                 'platform' => 'PlayStation 5',
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
-        ]);
+            [
+                'title' => 'FIFA 21',
+                'genre_id' => 11,
+                'platform' => 'Xbox Series X',
+            ],
+        ];
+
+        Schema::disableForeignKeyConstraints();
+
+        foreach ($gameData as $data) {
+            Game::create($data);
+        }
     }
 }
