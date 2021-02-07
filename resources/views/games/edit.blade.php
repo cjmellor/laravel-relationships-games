@@ -27,11 +27,11 @@
     </section>
 
     <section>
-        <label for="platform">Platform</label>
-        <select id="platform" name="platform">
-            <option disabled selected value="null">---Choose---</option>
+        <label for="console_id">Platform</label>
+        <select id="console_id" multiple name="console_id[]">
             @foreach($consoles as $console)
-                <option {{ ($game->platform == $console) ? 'selected' : '' }} value="{{ $console }}">{{ $console }}</option>
+                <option
+                    {{ $game->consoles->firstWhere('id', $console->id) !== null ? 'selected' : '' }} value="{{ $console->id }}">{{ $console->name }}</option>
             @endforeach
         </select>
     </section>

@@ -3,15 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Store extends Model
+class Console extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['name', 'location'];
-
+    /**
+     * Relationship: many-to-many
+     *
+     * A console belongs to many games
+     *
+     * @return BelongsToMany
+     */
     public function games(): BelongsToMany
     {
         return $this->belongsToMany(Game::class);

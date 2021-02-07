@@ -19,11 +19,10 @@
     </section>
 
     <section>
-        <label for="platform">Platform</label>
-        <select id="platform" name="platform">
-            <option disabled selected value="null">---Choose Platform---</option>
+        <label for="console_id">Consoles</label>
+        <select id="console_id" multiple name="console_id[]">
             @foreach($consoles as $console)
-                <option value="{{ $console }}">{{ $console }}</option>
+                <option value="{{ $console->id }}">{{ $console->name }}</option>
             @endforeach
         </select>
     </section>

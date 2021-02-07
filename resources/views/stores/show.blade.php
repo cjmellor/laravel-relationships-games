@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'Store: ' . $game->title)
+@section('title', 'Store: ' . $store->name)
 
 <h1>{{ $store->name }}</h1>
 
