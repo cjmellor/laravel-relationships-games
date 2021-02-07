@@ -7,6 +7,7 @@ use Throwable;
 use App\Models\Game;
 use App\Models\Store;
 use App\Models\Genre;
+use App\Models\Console;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -34,11 +35,12 @@ class GameController extends Controller
      */
     public function create()
     {
+        $consoles = Console::get(['id', 'name']);
         $stores = Store::get(['id', 'name']);
         $genres = Genre::get(['id', 'name'])->sortBy('name');
 
         return view('games.create')->with([
-            'consoles' => (new Game())->consoleList(),
+            'consoles' => $consoles,
             'genres' => $genres,
             'stores' => $stores,
         ]);
@@ -56,11 +58,11 @@ class GameController extends Controller
         $game = new Game();
 
         $game->title = $request->title;
-        $game->platform = $request->platform;
         $game->genre()->associate($request->genre_id);
 
         $game->saveOrFail();
 
+        $game->consoles()->attach($request->console_id);
         $game->stores()->attach($request->store_id);
 
         return redirect()->route('games.index')
@@ -88,11 +90,12 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
+        $consoles = Console::get(['id', 'name']);
         $stores = Store::get(['id', 'name']);
         $genres = Genre::get(['id', 'name'])->sortBy('name');
 
         return view('games.edit')->with([
-            'consoles' => $game->consoleList(),
+            'consoles' => $consoles,
             'game' => $game,
             'genres' => $genres,
             'stores' => $stores,
@@ -110,11 +113,11 @@ class GameController extends Controller
     public function update(Request $request, Game $game)
     {
         $game->title = $request->title;
-        $game->platform = $request->platform;
         $game->genre()->associate($request->genre_id);
 
         $game->saveOrFail();
 
+        $game->consoles()->sync($request->console_id);
         $game->stores()->sync($request->store_id);
 
         return redirect()->route('games.show', $game)
@@ -130,6 +133,7 @@ class GameController extends Controller
      */
     public function destroy(Game $game)
     {
+        $game->consoles()->detach();
         $game->stores()->detach();
 
         $game->delete();

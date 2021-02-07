@@ -9,8 +9,12 @@
 <h2>Genre</h2>
 <p>{{ $game->genre->name }}</p>
 
-<h2>Platform</h2>
-<p>{{ $game->platform }}</p>
+<h2>Available on</h2>
+<ul>
+    @foreach($game->consoles as $console)
+        <li>{{ $console->name }}</li>
+    @endforeach
+</ul>
 
 <h2>@lang('messages.available_at')</h2>
 

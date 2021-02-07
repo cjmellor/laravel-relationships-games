@@ -36,16 +36,14 @@ class Game extends Model
     }
 
     /**
-     * List of consoles available
-     * @TODO Remove this in favor of a relationship model
+     * Relationship: many-to-many
      *
-     * @return array
+     * A game has many consoles
+     *
+     * @return BelongsToMany
      */
-    public function consoleList(): array
+    public function consoles(): BelongsToMany
     {
-        return [
-            'Xbox Series X',
-            'PlayStation 5',
-        ];
+        return $this->belongsToMany(Console::class);
     }
 }
