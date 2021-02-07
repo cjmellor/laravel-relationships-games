@@ -17,23 +17,23 @@ class StoreSeeder extends Seeder
         DB::table('stores')->insert([
             [
                 'name' => 'GameStop',
-                'location' => 'Chicago'
+                'location' => 'Chicago',
             ],
             [
                 'name' => 'GAME',
-                'location' => 'Leeds'
+                'location' => 'Leeds',
             ],
             [
                 'name' => 'Gamestation',
-                'location' => 'Manchester'
+                'location' => 'Manchester',
             ],
             [
                 'name' => 'Blockbuster',
-                'location' => 'New York'
+                'location' => 'New York',
             ],
             [
                 'name' => 'Video 37',
-                'location' => 'Cardiff'
+                'location' => 'Cardiff',
             ],
         ]);
     }

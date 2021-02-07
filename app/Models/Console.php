@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Console extends Model
 {
     /**
-     * Relationship: many-to-many
+     * Relationship: many-to-many.
      *
      * A console belongs to many games
      *
