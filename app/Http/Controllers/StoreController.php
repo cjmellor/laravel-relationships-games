@@ -28,7 +28,7 @@ class StoreController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View|Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -60,6 +60,8 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
+        $store->loadCount('games');
+
         return view('stores.show')->with('store', $store);
     }
 
@@ -67,7 +69,7 @@ class StoreController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  Store  $store
-     * @return Application|Factory|View|Response
+     * @return Application|Factory|View
      */
     public function edit(Store $store)
     {

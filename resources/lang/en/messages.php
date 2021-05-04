@@ -5,7 +5,7 @@ return [
     'add_new_game' => 'Add New Game',
     'add_new_store' => 'Add New Store',
     'back_to' => 'Back to :Type',
-    'available_at' => 'Available at these stores',
+    'available_at' => 'Available at these :count :store_plural',
     'back_to_games_list' => 'Back to games',
     'back_to_store' => 'Back to stores',
     'destroy' => 'Delete :Type',

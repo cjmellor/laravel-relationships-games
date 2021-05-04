@@ -4,7 +4,7 @@
 
 <h1>{{ $store->name }}</h1>
 
-<h2>@lang('messages.for_sale')</h2>
+<h2>@lang('messages.for_sale') ({{ $store->games_count }})</h2>
 
 <x-message type="success"/>
 

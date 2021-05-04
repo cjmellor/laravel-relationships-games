@@ -16,7 +16,10 @@
     @endforeach
 </ul>
 
-<h2>@lang('messages.available_at')</h2>
+<h2>@lang('messages.available_at', [
+    'count' => $game->stores->count(),
+    'store_plural' => Str::plural('store', $game->stores->count())
+])</h2>
 
 <ul>
     @foreach($game->stores as $store)

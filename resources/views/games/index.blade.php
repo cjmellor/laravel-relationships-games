@@ -1,4 +1,4 @@
-<h1>@lang('messages.list_of_games')</h1>
+<h1>@lang('messages.list_of_games') ({{ $games->count() }})</h1>
 
 @if(session()->has('success'))
     {{ session()->get('success') }}<br><br>
